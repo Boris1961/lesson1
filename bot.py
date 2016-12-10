@@ -1,6 +1,8 @@
+#  coding: utf-8
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-def main():
+
+def main(): 
     updater = Updater("312039735:AAFzeUt-LKAnHjr9n58unpfO8_CAsxbCq70")
     
     dp = updater.dispatcher
@@ -15,7 +17,8 @@ def greet_user(bot, update):
 
 def talk_to_me(bot, update):
     print('Пришло сообщение: {}'.format(update.message.text))
-    bot.sendMessage(update.message.chat_id, update.message.text)
+    UPT=update.message.text
+    bot.sendMessage(update.message.chat_id, len(UPT.split()))
 
 if __name__ == '__main__':
     main()
