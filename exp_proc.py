@@ -113,8 +113,8 @@ def compile_str_to_postfix(esource):
 	
 	# компиляция списка литералов в постфиксную запись
 
-	oprs_list      =  [ ')', '+', '-', '*', '/',  '^',  '(' ]
-	oprs_priority  =  [   0,   1,   1,   2,   2,    3,    4 ]
+	operators_priority  =  {')': 0, '+': 1, '-': 1, '*': 2, '/': 2, '^': 3, '(': 4}
+	
 	stack=[]
 	postfix=[]
 
@@ -140,7 +140,7 @@ def compile_str_to_postfix(esource):
 
 		elif c_word_sch=='%':
 			
-			if len(stack)==0 or stack[-1]=='(' or oprs_priority[oprs_list.index(c_word_det)]>oprs_priority[oprs_list.index(stack[-1])]:
+			if len(stack)==0 or stack[-1]=='(' or operators_priority[c_word_det]>operators_priority[stack[-1]]:
 				stack.append(c_word_det)
 			else:
 				while len(stack)>0 and stack[-1]!='(' :
@@ -155,15 +155,15 @@ def compile_str_to_postfix(esource):
 	return postfix
 
 
-def extcute_postfix(postfix):
+def execute_postfix(postfix):
 
 	stack=[]
-	for i in range(0,len(postfix)) :
+	
+	for c_item in postfix :
 		
-		c_item=postfix[i]
 
+		if not c_item in ['+', '-', '/', '*', '^'] :
 
-		if type(c_item)!=str:
 			stack.append(c_item)
 		
 		else:
@@ -183,7 +183,7 @@ def extcute_postfix(postfix):
 			elif c_item=='/' :
 				if opn2==0:
 					return "#error: null division"
-					return 0
+
 				stack.append(opn1/opn2)
 
 			elif c_item=='^' :
@@ -191,7 +191,7 @@ def extcute_postfix(postfix):
 
 			else:
 				return "#error: unknown"
-				return 0
+
 
 	return stack.pop()
 	
@@ -204,6 +204,6 @@ if __name__ == '__main__':
 
 	print("Постфиксная запись", postfix)
 
-	result=extcute_postfix(postfix)
+	result=execute_postfix(postfix)
 
 	print(result, '=', result)
