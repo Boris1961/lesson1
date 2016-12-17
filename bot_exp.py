@@ -195,16 +195,31 @@ def execute_postfix(postfix):
 
 
 	return stack.pop()
-	
-if __name__ == '__main__':
 
+
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+
+def main(): 
+    updater = Updater("312039735:AAFzeUt-LKAnHjr9n58unpfO8_CAsxbCq70")
     
-	c_exp=input("Введи выражение:")
-	
-	postfix=compile_str_to_postfix(c_exp)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("start", greet_user))
+    dp.add_handler(CommandHandler("abort", abort_bot))
+    dp.add_handler(MessageHandler([Filters.text], talk_to_me))
+    updater.start_polling()
+    updater.idle()
 
-	print("Постфиксная запись", postfix)
+def greet_user(bot, update):
+    print('Вызван /start')
+    bot.sendMessage(update.message.chat_id, text='Давай общаться!')
 
-	result=execute_postfix(postfix)
+def abort_bot(bot, update):
+    print('Вызван /abort')
+    bot.sendMessage(update.message.chat_id, text-'ухожу-ухожу-ухожу...')
+    exit()
 
-	print(c_exp, '=', result)
+def talk_to_me(bot, update):
+    print('Пришло сообщение: {}'.format(update.message.text))
+    bot_command=update.message.text
+    bot.sendMessage(update.message.chat_id, execute_postfix(compile_str_to_postfix(bot_command)))
