@@ -1,3 +1,5 @@
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
 def compile_str_to_postfix(esource):
 
 
@@ -197,9 +199,6 @@ def execute_postfix(postfix):
 	return stack.pop()
 
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-
-
 def main(): 
     updater = Updater("312039735:AAFzeUt-LKAnHjr9n58unpfO8_CAsxbCq70")
     
@@ -222,4 +221,7 @@ def abort_bot(bot, update):
 def talk_to_me(bot, update):
     print('Пришло сообщение: {}'.format(update.message.text))
     bot_command=update.message.text
-    bot.sendMessage(update.message.chat_id, execute_postfix(compile_str_to_postfix(bot_command)))
+    bot.sendMessage(update.message.chat_id, str(execute_postfix(compile_str_to_postfix(bot_command))))
+
+if __name__ == '__main__':
+	main()
