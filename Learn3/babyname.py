@@ -19,6 +19,7 @@ t = requests.get("http://api.data.mos.ru/v1/datasets/2009/rows")
 flist = json.loads(t.text)
 
 
+
 nlst = [ dict(name=s.get('Cells').get('Name').replace('\n',''), \
 			  year=s.get('Cells').get('Year'), \
 			  month=s.get('Cells').get('Month'), \
