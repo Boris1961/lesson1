@@ -1,5 +1,8 @@
 # /docs.python.org документация
 # coding: utf-8
+
+# MOS.RU boris1961 pass=EAGLES261 key=14e1239edc198f0a560022553dcb45bf
+
 from collections import Counter
 import json
 import requests
@@ -16,9 +19,12 @@ t = requests.get("http://api.data.mos.ru/v1/datasets/2009/rows")
 flist = json.loads(t.text)
 
 
-nlst = [ dict(name=s.get('Cells').get('Name').replace('\n',''), year=s.get('Cells').get('Year'), month=s.get('Cells').get('Month'), num=s.get('Cells').get('NumberOfPersons')) for s in flist if s.get('Cells').get('Year')==2015 ]
+nlst = [ dict(name=s.get('Cells').get('Name').replace('\n',''), \
+			  year=s.get('Cells').get('Year'), \
+			  month=s.get('Cells').get('Month'), \
+			  num=s.get('Cells').get('NumberOfPersons')) \
+		 for s in flist if s.get('Cells').get('Year')==2015 ]
 
-# print(nlst)
 
 """"
 for d in nlst:
